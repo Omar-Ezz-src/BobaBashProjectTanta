@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AERO-BIO // World's Lightest Aerogel Gaming Mouse</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & Space Grotesk / JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              lime: '#C6FF00',
+              limeGlow: 'rgba(198, 255, 0, 0.4)',
+              cyan: '#00F2FE',
+              cyanGlow: 'rgba(0, 242, 254, 0.4)',
+              darkVoid: '#060A08',
+              surfaceDark: '#0C130F',
+              cardDark: 'rgba(15, 25, 20, 0.7)',
+              borderGlow: 'rgba(198, 255, 0, 0.25)',
+            }
+          },
+          fontFamily: {
+            sans: ['Space Grotesk', 'Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'float-delayed': 'float 6s ease-in-out 3s infinite',
+            'glow-spin': 'glowSpin 12s linear infinite',
+            'marquee': 'marquee 25s linear infinite',
+            'bio-breath': 'bioBreath 3s ease-in-out infinite alternate',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-15px) rotate(1.5deg)' },
+            },
+            glowSpin: {
+              '0%': { transform: 'rotate(0deg)' },
+              '100%': { transform: 'rotate(360deg)' },
+            },
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-50%)' },
+            },
+            bioBreath: {
+              '0%': { opacity: '0.4', filter: 'drop-shadow(0 0 15px rgba(198, 255, 0, 0.3))' },
+              '100%': { opacity: '0.9', filter: 'drop-shadow(0 0 35px rgba(0, 242, 254, 0.7))' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom CSS Styles, Gradients & Animations */
+    body {
+      background-color: #050806;
+      color: #E2E8F0;
+      overflow-x: hidden;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Gritty Grid & Bio Noise Overlay */
+    .bg-grid-pattern {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(198, 255, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(198, 255, 0, 0.05) 1px, transparent 1px);
+    }
+
+    /* Radial Spotlight Cursor Effect */
+    #cursor-spotlight {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 600px; height: 600px;
+      margin-left: -300px; margin-top: -300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(198, 255, 0, 0.08) 0%, rgba(0, 242, 254, 0.03) 40%, transparent 70%);
+      transition: transform 0.08s ease-out;
+      z-index: 40;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #060A08;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1E2E24;
+      border-radius: 4px;
+      border: 1px solid rgba(198, 255, 0, 0.2);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C6FF00;
+    }
+
+    /* Text Glow Utilities */
+    .text-glow-lime {
+      text-shadow: 0 0 15px rgba(198, 255, 0, 0.6), 0 0 30px rgba(198, 255, 0, 0.2);
+    }
+    .text-glow-cyan {
+      text-shadow: 0 0 15px rgba(0, 242, 254, 0.6), 0 0 30px rgba(0, 242, 254, 0.2);
+    }
+
+    /* Glassmorphism Card Style */
+    .glass-card {
+      background: rgba(12, 20, 15, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(198, 255, 0, 0.15);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(198, 255, 0, 0.5);
+      box-shadow: 0 12px 40px 0 rgba(198, 255, 0, 0.2);
+    }
+
+    /* Shockwave Ripple Effect on Click */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      animation: rippleEffect 0.6s linear;
+      background: rgba(198, 255, 0, 0.4);
+      pointer-events: none;
+    }
+
+    @keyframes rippleEffect {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+
+    /* 3D Tilt Card Base */
+    .tilt-card {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    /* Custom range input styling */
+    input[type=range] {
+      -webkit-appearance: none;
+      background: #142019;
+      height: 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(198, 255, 0, 0.3);
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      background: #C6FF00;
+      box-shadow: 0 0 12px #C6FF00;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    /* Animated gradient border button */
+    .gradient-border-btn {
+      position: relative;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #C6FF00, #00F2FE, #C6FF00);
+      background-size: 200% 100%;
+      animation: gradientMove 4s linear infinite;
+      padding: 2px;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    /* Scroll Reveal Initial States */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body class="bg-grid-pattern relative text-gray-100 selection:bg-brand-lime selection:text-black">
+
+  <!-- Interactive Spotlight Mouse Follower -->
+  <div id="cursor-spotlight"></div>
+
+  <!-- Background Particle Canvas -->
+  <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-60"></canvas>
+
+  <!-- Top Scroll Progress Bar -->
+  <div id="scrollProgress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-brand-lime via-brand-cyan to-brand-lime z-50 transition-all duration-75 w-0 shadow-[0_0_10px_#C6FF00]"></div>
+
+  <!-- Sound FX Toggle Floating Control -->
+  <button id="soundToggleBtn" onclick="toggleAudio()" class="fixed bottom-6 right-6 z-50 p-4 rounded-full glass-card hover:border-brand-lime transition-all duration-300 flex items-center justify-center group shadow-2xl" title="Toggle Synthesizer Sound FX">
+    <i id="soundIcon" class="fas fa-volume-xmark text-brand-lime text-xl group-hover:scale-110 transition-transform"></i>
+    <span id="soundLabel" class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 ease-in-out whitespace-nowrap text-xs font-mono ml-0 group-hover:ml-2 text-brand-lime font-bold">AUDIO OFF</span>
+  </button>
+
+  <!-- Sticky Glassmorphism Header -->
+  <header id="mainHeader" class="sticky top-0 z-40 w-full backdrop-blur-md border-b border-brand-lime/10 bg-brand-darkVoid/80 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-3 group" onclick="playSynthSound(520, 'sine', 0.1)">
+        <div class="relative w-10 h-10 rounded-xl bg-gradient-to-br from-brand-lime to-brand-cyan p-0.5 shadow-[0_0_20px_rgba(198,255,0,0.4)] group-hover:rotate-12 transition-transform duration-300">
+          <div class="w-full h-full bg-brand-darkVoid rounded-[10px] flex items-center justify-center">
+            <i class="fas fa-[#] fa-atom text-brand-lime text-lg animate-pulse"></i>
+          </div>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-black tracking-widest text-white flex items-center gap-1">
+            AERO<span class="text-brand-lime text-glow-lime">-BIO</span>
+          </span>
+          <span class="text-[9px] font-mono tracking-widest text-brand-cyan uppercase">0G Mass Spec</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 font-mono text-sm tracking-wider">
+        <a href="#overview" class="hover:text-brand-lime transition-colors flex items-center gap-1.5 hover:translate-y-[-1px]">
+          <span class="text-brand-lime">//</span> 01. TECH
+        </a>
+        <a href="#comparison" class="hover:text-brand-lime transition-colors flex items-center gap-1.5 hover:translate-y-[-1px]">
+          <span class="text-brand-lime">//</span> 02. MASS LAB
+        </a>
+        <a href="#models" class="hover:text-brand-lime transition-colors flex items-center gap-1.5 hover:translate-y-[-1px]">
+          <span class="text-brand-lime">//</span> 03. MATRIX
+        </a>
+        <a href="#features" class="hover:text-brand-lime transition-colors flex items-center gap-1.5 hover:translate-y-[-1px]">
+          <span class="text-brand-lime">//</span> 04. BIO-CELL
+        </a>
+      </nav>
+
+      <!-- CTA Nav Button -->
+      <div class="flex items-center gap-4">
+        <button onclick="openOrderModal()" class="gradient-border-btn group cursor-pointer">
+          <div class="bg-brand-darkVoid px-6 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300 group-hover:bg-transparent">
+            <span class="text-xs font-mono font-bold tracking-widest text-brand-lime group-hover:text-black uppercase">Reserve 18g Shell</span>
+            <i class="fas fa-arrow-right text-xs text-brand-lime group-hover:text-black group-hover:translate-x-1 transition-transform"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section id="overview" class="relative min-h-[calc(100vh-80px)] flex items-center justify-center pt-8 pb-16 overflow-hidden">
+    
+    <!-- Ambient Bio-Orb Glow Backgrounds -->
+    <div class="absolute top-1/4 left-10 w-96 h-96 bg-brand-lime/10 rounded-full blur-[120px] animate-pulse-slow pointer-events-none"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-brand-cyan/15 rounded-full blur-[140px] animate-pulse-slow pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Left Column: Bio Tech Headline & Stats -->
+      <div class="lg:col-span-7 flex flex-col items-start gap-6">
+        
+        <!-- Live Energy Status Pill -->
+        <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-card border-brand-lime/30 hover:border-brand-lime transition-all">
+          <span class="relative flex h-3 w-3">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-lime opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-lime"></span>
+          </span>
+          <span class="font-mono text-xs text-brand-lime tracking-widest uppercase">Bio-Kinetic Harvest Active // 18G Mass</span>
+        </div>
+
+        <!-- Hero Title -->
+        <h1 class="text-5xl sm:text-7xl xl:text-8xl font-black tracking-tight leading-[0.95] text-white">
+          99% AIR. <br>
+          <span class="bg-gradient-to-r from-brand-lime via-brand-cyan to-brand-lime bg-clip-text text-transparent text-glow-lime">
+            PURE GRAVITY ZERO.
+          </span>
+        </h1>
+
+        <p class="text-lg text-gray-400 max-w-xl font-light leading-relaxed">
+          Engineered with hyper-porous bio-synthesized aerogel matrices. Powered continuously by human thermal skin dissipation & kinetic friction energy. <strong class="text-white font-semibold">Zero batteries. Zero drag. Infinite precision.</strong>
+        </p>
+
+        <!-- CTA Action Row -->
+        <div class="flex flex-wrap items-center gap-4 pt-4 w-full sm:w-auto">
+          <button onclick="openOrderModal()" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-brand-lime text-black font-extrabold text-sm uppercase tracking-wider hover:bg-white hover:shadow-[0_0_30px_#C6FF00] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3">
+            <i class="fas fa-bolt"></i>
+            <span>Deploy Aero-Bio 0G ($189)</span>
+          </button>
+
+          <a href="#comparison" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-card text-white font-mono text-xs tracking-widest uppercase hover:bg-brand-lime/10 hover:border-brand-lime transition-all duration-300 flex items-center justify-center gap-2">
+            <span>Launch Mass Simulator</span>
+            <i class="fas fa-angle-right text-brand-lime"></i>
+          </a>
+        </div>
+
+        <!-- Mini Metric Badges -->
+        <div class="grid grid-cols-3 gap-6 pt-8 border-t border-brand-lime/10 w-full max-w-lg font-mono">
+          <div>
+            <div class="text-3xl font-black text-brand-lime" id="heroMassCounter">18.0g</div>
+            <div class="text-[11px] text-gray-500 uppercase tracking-widest mt-1">Total Weight</div>
+          </div>
+          <div>
+            <div class="text-3xl font-black text-brand-cyan">0.001g</div>
+            <div class="text-[11px] text-gray-500 uppercase tracking-widest mt-1">Aerogel Density</div>
+          </div>
+          <div>
+            <div class="text-3xl font-black text-brand-lime">∞ Hrs</div>
+            <div class="text-[11px] text-gray-500 uppercase tracking-widest mt-1">Bio-Harvest Charge</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Interactive 3D Aerogel Mouse Viewport -->
+      <div class="lg:col-span-5 flex flex-col items-center justify-center relative">
+        
+        <!-- Hover 3D Mouse Display Card -->
+        <div class="relative w-full aspect-square max-w-[480px] rounded-3xl glass-card border-brand-lime/30 p-4 flex flex-col items-center justify-center tilt-card group cursor-grab active:cursor-grabbing shadow-[0_0_50px_rgba(198,255,0,0.15)]" id="heroCard3D">
+          
+          <!-- Radial Inner Pulse -->
+          <div class="absolute inset-4 rounded-2xl bg-gradient-to-b from-brand-lime/10 to-brand-cyan/5 border border-brand-lime/20 pointer-events-none"></div>
+
+          <!-- Interactive WebGL/Canvas Mouse Render -->
+          <canvas id="mouse3DCanvas" class="w-full h-full relative z-10 drop-shadow-[0_20px_30px_rgba(198,255,0,0.3)]"></canvas>
+
+          <!-- Interactive Instruction Badge -->
+          <div class="absolute bottom-6 z-20 px-4 py-1.5 rounded-full bg-brand-darkVoid/90 border border-brand-lime/40 text-[10px] font-mono text-brand-lime tracking-widest flex items-center gap-2 shadow-lg pointer-events-none group-hover:scale-105 transition-transform">
+            <i class="fas fa-arrows-spin text-xs animate-spin"></i>
+            <span>DRAG / HOVER TO ROTATE 3D AEROGEL MATRIX</span>
+          </div>
+
+          <!-- Live Color Shell Variant Switcher -->
+          <div class="absolute top-6 right-6 z-20 flex flex-col gap-2">
+            <button onclick="setMouseTheme('lime')" class="w-7 h-7 rounded-full bg-brand-lime border-2 border-white/80 shadow-[0_0_10px_#C6FF00] hover:scale-125 transition-transform" title="Bio-Lime Shell"></button>
+            <button onclick="setMouseTheme('cyan')" class="w-7 h-7 rounded-full bg-brand-cyan border-2 border-white/80 shadow-[0_0_10px_#00F2FE] hover:scale-125 transition-transform" title="Cyber-Cyan Shell"></button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MARQUEE RUNNING TICKER -->
+  <div class="w-full bg-brand-lime text-black font-mono font-black text-xs tracking-widest py-3 uppercase overflow-hidden border-y border-black relative z-20">
+    <div class="whitespace-nowrap flex gap-12 animate-marquee">
+      <span>/// AEROGEL MOLECULAR STRUCTURE (99.8% AIR)</span>
+      <span>/// ZERO-BATTERY BIO-HEAT KINETIC CHARGE</span>
+      <span>/// 18 GRAMS TOTAL MASS</span>
+      <span>/// 30,000 DPI OPTICAL MATRIX</span>
+      <span>/// BIO-LUMINESCENT ORGANIC SHELL</span>
+      <span>/// AEROGEL MOLECULAR STRUCTURE (99.8% AIR)</span>
+      <span>/// ZERO-BATTERY BIO-HEAT KINETIC CHARGE</span>
+      <span>/// 18 GRAMS TOTAL MASS</span>
+      <span>/// 30,000 DPI OPTICAL MATRIX</span>
+      <span>/// BIO-LUMINESCENT ORGANIC SHELL</span>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE MASS COMPARISON SCALE SECTION -->
+  <section id="comparison" class="py-24 relative z-10 border-b border-brand-lime/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <span class="font-mono text-xs text-brand-lime tracking-widest uppercase mb-2 block">// MASS SIMULATION LAB</span>
+        <h2 class="text-4xl sm:text-5xl font-black text-white">FEEL THE ZERO-GRAVITY DIFFERENCE</h2>
+        <p class="text-gray-400 mt-4 font-light">Drag the scale slider below to compare standard gaming mice against the AERO-BIO 0G aerogel structure.</p>
+      </div>
+
+      <!-- Interactive Scale Card -->
+      <div class="glass-card rounded-3xl p-8 sm:p-12 border-brand-lime/20 reveal">
+        
+        <!-- Live Interactive Visual Balance Beam -->
+        <div class="relative w-full h-64 bg-brand-darkVoid/90 rounded-2xl border border-brand-lime/20 p-6 flex flex-col justify-between overflow-hidden mb-8">
+          
+          <div class="flex justify-between items-center text-xs font-mono text-gray-400 z-10">
+            <span>TRADITIONAL MOUSE</span>
+            <span class="text-brand-lime font-bold">AERO-BIO 0G</span>
+          </div>
+
+          <!-- Balance Fulcrum & Beam Representation -->
+          <div class="relative w-full h-32 flex items-center justify-center my-auto">
+            
+            <!-- Tilt Pivot Beam -->
+            <div id="balanceBeam" class="w-full h-2 bg-gradient-to-r from-red-500 via-brand-lime to-brand-cyan rounded-full transition-transform duration-300 origin-center flex justify-between items-center px-4 relative">
+              
+              <!-- Left Weight (Standard Mouse) -->
+              <div class="absolute left-4 -top-12 flex flex-col items-center">
+                <div id="standardMouseWeightBox" class="w-16 h-16 bg-red-950/80 border-2 border-red-500 rounded-xl flex items-center justify-center text-red-400 font-bold font-mono text-sm shadow-[0_0_15px_rgba(239,68,68,0.4)]">
+                  <span id="standardMassLabel">85g</span>
+                </div>
+                <div class="w-0.5 h-6 bg-red-500"></div>
+              </div>
+
+              <!-- Right Weight (Aero Mouse) -->
+              <div class="absolute right-4 -top-12 flex flex-col items-center">
+                <div class="w-16 h-16 bg-brand-lime/20 border-2 border-brand-lime rounded-xl flex flex-col items-center justify-center text-brand-lime font-bold font-mono text-sm shadow-[0_0_20px_#C6FF00] animate-pulse">
+                  <span>18g</span>
+                  <span class="text-[8px] text-brand-cyan uppercase">Aerogel</span>
+                </div>
+                <div class="w-0.5 h-6 bg-brand-lime"></div>
+              </div>
+
+            </div>
+
+            <!-- Central Fulcrum Pyramid -->
+            <div class="absolute bottom-2 w-0 h-0 border-l-[16px] border-r-[16px] border-b-[28px] border-l-transparent border-r-transparent border-b-brand-lime"></div>
+          </div>
+
+          <!-- Kinetic Inertia Drag Metric Output -->
+          <div class="flex justify-between items-center text-xs font-mono z-10">
+            <div class="text-red-400">
+              Wrist Fatigue Index: <span id="fatigueScore" class="font-bold text-sm">84.5%</span>
+            </div>
+            <div class="text-brand-lime">
+              Inertial Resistance Reduction: <span id="inertiaSaved" class="font-bold text-sm">78.8%</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Slider Controls -->
+        <div class="flex flex-col sm:flex-row items-center gap-6">
+          <label for="massRange" class="font-mono text-sm text-gray-300 whitespace-nowrap flex items-center gap-2">
+            <i class="fas fa-weight-hanging text-brand-lime"></i>
+            Compare Mouse Mass (grams):
+          </label>
+          
+          <input type="range" id="massRange" min="50" max="130" value="85" class="w-full flex-grow cursor-pointer" oninput="updateMassScale(this.value)">
+
+          <span id="sliderValueDisplay" class="font-mono text-xl font-bold text-brand-lime min-w-[70px] text-right">85g</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPECS breakdown & FEATURE CARDS (ON HOVER INTENSE) -->
+  <section id="features" class="py-24 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 reveal">
+        <div>
+          <span class="font-mono text-xs text-brand-cyan tracking-widest uppercase mb-2 block">// BIO-HARVEST & NANOTECH</span>
+          <h2 class="text-4xl sm:text-5xl font-black text-white">REVOLUTIONARY MATRICES</h2>
+        </div>
+        <p class="text-gray-400 font-light max-w-md mt-4 md:mt-0">
+          Hover over each bio-cell module to inspect internal aerogel molecular stats and energy harvesting telemetry.
+        </p>
+      </div>
+
+      <!-- Grid of Feature Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Card 1 -->
+        <div class="glass-card rounded-3xl p-8 tilt-card group relative overflow-hidden reveal">
+          <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand-lime/10 rounded-full blur-3xl group-hover:bg-brand-lime/30 transition-all duration-500"></div>
+          
+          <div class="w-14 h-14 rounded-2xl bg-brand-lime/10 border border-brand-lime/30 flex items-center justify-center text-brand-lime text-2xl mb-6 group-hover:scale-110 group-hover:bg-brand-lime group-hover:text-black transition-all duration-300">
+            <i class="fas fa-wind"></i>
+          </div>
+
+          <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-brand-lime transition-colors">Bio-Aerogel Shell</h3>
+          <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">
+            Synthesized silica aerogel combined with bio-based chitin polymer strands creates an indestructible cellular lattice made of 99% trapped air pockets.
+          </p>
+
+          <div class="pt-4 border-t border-brand-lime/10 flex justify-between items-center font-mono text-xs text-brand-lime">
+            <span>AIR MASS RATIO</span>
+            <span class="font-bold">99.8%</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="glass-card rounded-3xl p-8 tilt-card group relative overflow-hidden reveal">
+          <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand-cyan/10 rounded-full blur-3xl group-hover:bg-brand-cyan/30 transition-all duration-500"></div>
+
+          <div class="w-14 h-14 rounded-2xl bg-brand-cyan/10 border border-brand-cyan/30 flex items-center justify-center text-brand-cyan text-2xl mb-6 group-hover:scale-110 group-hover:bg-brand-cyan group-hover:text-black transition-all duration-300">
+            <i class="fas fa-temperature-arrow-up"></i>
+          </div>
+
+          <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-brand-cyan transition-colors">Thermo-Kinetic Cell</h3>
+          <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">
+            Captures palm heat dissipation and swipe kinetic vibrations, converting thermal differentials into steady electrical power for zero battery weight.
+          </p>
+
+          <div class="pt-4 border-t border-brand-cyan/10 flex justify-between items-center font-mono text-xs text-brand-cyan">
+            <span>CHARGE INPUT</span>
+            <span class="font-bold">INFINITE CONTINUOUS</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="glass-card rounded-3xl p-8 tilt-card group relative overflow-hidden reveal">
+          <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-brand-lime/10 rounded-full blur-3xl group-hover:bg-brand-lime/30 transition-all duration-500"></div>
+
+          <div class="w-14 h-14 rounded-2xl bg-brand-lime/10 border border-brand-lime/30 flex items-center justify-center text-brand-lime text-2xl mb-6 group-hover:scale-110 group-hover:bg-brand-lime group-hover:text-black transition-all duration-300">
+            <i class="fas fa-microchip"></i>
+          </div>
+
+          <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-brand-lime transition-colors">0G Bio-Sensor</h3>
+          <p class="text-gray-400 text-sm font-light leading-relaxed mb-6">
+            30,000 DPI sub-nanometer optical sensor calibrated specifically for ultra-low inertia motion without jitter or tracking degradation.
+          </p>
+
+          <div class="pt-4 border-t border-brand-lime/10 flex justify-between items-center font-mono text-xs text-brand-lime">
+            <span>MAX ACCELERATION</span>
+            <span class="font-bold">70G / 750 IPS</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE MATRIX / PRODUCT CATALOG SECTION -->
+  <section id="models" class="py-24 relative z-10 bg-brand-darkVoid/50 border-t border-brand-lime/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <span class="font-mono text-xs text-brand-lime tracking-widest uppercase mb-2 block">// CHOOSE YOUR SPECIMEN</span>
+        <h2 class="text-4xl sm:text-5xl font-black text-white">AERO-BIO VARIANT MATRIX</h2>
+        <p class="text-gray-400 mt-4 font-light">Select between the ultra-minimalist 0G flagship or the expanded multi-macro Bio-X chassis.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <!-- Specimen 1 Card -->
+        <div class="glass-card rounded-3xl p-8 sm:p-10 border-brand-lime/40 flex flex-col justify-between relative overflow-hidden group reveal">
+          <div class="absolute top-0 right-0 bg-brand-lime text-black font-mono font-bold text-xs px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest">
+            FLAGSHIP // 18G
+          </div>
+
+          <div>
+            <div class="font-mono text-brand-lime text-xs tracking-widest mb-2">MODEL ID: AB-0G-2026</div>
+            <h3 class="text-3xl font-black text-white mb-4">AERO-BIO 0G</h3>
+            <p class="text-gray-400 text-sm mb-6 font-light">Pure minimalist aerogel exoskeleton designed for competitive FPS Esports pros seeking non-existent mass resistance.</p>
+
+            <!-- Spec Grid -->
+            <div class="grid grid-cols-2 gap-4 font-mono text-xs my-6 bg-brand-darkVoid/80 p-4 rounded-2xl border border-brand-lime/10">
+              <div><span class="text-gray-500">WEIGHT:</span> <span class="text-brand-lime font-bold">18 Grams</span></div>
+              <div><span class="text-gray-500">SWITCH:</span> <span class="text-white">Bio-Optical Magnet</span></div>
+              <div><span class="text-gray-500">LATENCY:</span> <span class="text-brand-lime font-bold">0.12 ms</span></div>
+              <div><span class="text-gray-500">POWER:</span> <span class="text-white">Thermal-Kinetic</span></div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-6 border-t border-brand-lime/10">
+            <div>
+              <span class="text-2xl font-black text-white">$189</span>
+              <span class="text-xs text-gray-500 font-mono ml-2">USD</span>
+            </div>
+            <button onclick="openOrderModal('AERO-BIO 0G Flagship', '$189')" class="px-6 py-3 rounded-xl bg-brand-lime text-black font-bold text-xs uppercase tracking-wider hover:bg-white hover:scale-105 active:scale-95 transition-all">
+              Configure & Pre-Order
+            </button>
+          </div>
+        </div>
+
+        <!-- Specimen 2 Card -->
+        <div class="glass-card rounded-3xl p-8 sm:p-10 border-brand-cyan/40 flex flex-col justify-between relative overflow-hidden group reveal">
+          <div class="absolute top-0 right-0 bg-brand-cyan text-black font-mono font-bold text-xs px-4 py-1.5 rounded-bl-2xl uppercase tracking-widest">
+            BIO-X ADVANCED // 22G
+          </div>
+
+          <div>
+            <div class="font-mono text-brand-cyan text-xs tracking-widest mb-2">MODEL ID: AB-X-2026</div>
+            <h3 class="text-3xl font-black text-white mb-4">AERO-X BIO MATRIX</h3>
+            <p class="text-gray-400 text-sm mb-6 font-light">Adds 6 programmable bio-tactile thumb keys with dynamic shape-memory gel keycaps for MOBA/MMO apex control.</p>
+
+            <!-- Spec Grid -->
+            <div class="grid grid-cols-2 gap-4 font-mono text-xs my-6 bg-brand-darkVoid/80 p-4 rounded-2xl border border-brand-cyan/10">
+              <div><span class="text-gray-500">WEIGHT:</span> <span class="text-brand-cyan font-bold">22 Grams</span></div>
+              <div><span class="text-gray-500">BUTTONS:</span> <span class="text-white">8 Bio-Tactile</span></div>
+              <div><span class="text-gray-500">POLLING:</span> <span class="text-brand-cyan font-bold">8000 Hz Wireless</span></div>
+              <div><span class="text-gray-500">POWER:</span> <span class="text-white">Hybrid Thermal</span></div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-6 border-t border-brand-cyan/10">
+            <div>
+              <span class="text-2xl font-black text-white">$219</span>
+              <span class="text-xs text-gray-500 font-mono ml-2">USD</span>
+            </div>
+            <button onclick="openOrderModal('AERO-X BIO Advanced', '$219')" class="px-6 py-3 rounded-xl bg-brand-cyan text-black font-bold text-xs uppercase tracking-wider hover:bg-white hover:scale-105 active:scale-95 transition-all">
+              Configure & Pre-Order
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION / BIO GLOW FOOTER HERO -->
+  <section class="py-24 relative overflow-hidden text-center z-10">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-brand-lime/10 to-transparent pointer-events-none"></div>
+    
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 reveal">
+      <i class="fas fa-atom text-5xl text-brand-lime mb-6 animate-spin" style="animation-duration: 15s;"></i>
+      <h2 class="text-4xl sm:text-6xl font-black text-white mb-6">
+        READY TO LEVITATE YOUR AIM?
+      </h2>
+      <p class="text-gray-300 font-light text-lg mb-8 max-w-xl mx-auto">
+        Join the first wave of bio-harvested aerogel gaming hardware. Zero mass limiters. Infinite gaming evolution.
+      </p>
+
+      <button onclick="openOrderModal()" class="px-10 py-5 rounded-full bg-gradient-to-r from-brand-lime to-brand-cyan text-black font-black text-base uppercase tracking-widest shadow-[0_0_40px_rgba(198,255,0,0.5)] hover:scale-110 active:scale-95 transition-all duration-300">
+        Claim Aerogel Batch #001
+      </button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-brand-lime/10 bg-brand-darkVoid py-12 relative z-10 font-mono text-xs text-gray-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-3">
+        <span class="text-brand-lime font-bold text-sm tracking-widest">AERO-BIO LABS</span>
+        <span>// © 2026 NEXT-GEN AEROGEL GAMING INC.</span>
+      </div>
+
+      <div class="flex gap-6 text-gray-400">
+        <a href="#" class="hover:text-brand-lime transition-colors">PRIVACY MATRIX</a>
+        <a href="#" class="hover:text-brand-lime transition-colors">TELEMETRY</a>
+        <a href="#" class="hover:text-brand-lime transition-colors">DISCORD CELL</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PRE-ORDER / CONFIGURATOR MODAL -->
+  <div id="orderModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="glass-card max-w-lg w-full rounded-3xl p-8 border-brand-lime relative transform scale-95 transition-transform duration-300" id="modalContent">
+      
+      <!-- Close button -->
+      <button onclick="closeOrderModal()" class="absolute top-6 right-6 text-gray-400 hover:text-brand-lime text-xl">
+        <i class="fas fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-2 text-brand-lime font-mono text-xs tracking-widest mb-2">
+        <i class="fas fa-microchip"></i>
+        <span>DIRECT FACTORY ALLOCATION</span>
+      </div>
+
+      <h3 id="modalProductTitle" class="text-2xl font-black text-white mb-2">AERO-BIO 0G Flagship</h3>
+      <p id="modalProductPrice" class="text-xl font-mono text-brand-lime font-bold mb-6">$189 USD</p>
+
+      <form onsubmit="handleFormSubmit(event)" class="space-y-4 font-mono text-xs">
+        <div>
+          <label class="block text-gray-400 mb-1">CALLSIGN / NAME</label>
+          <input type="text" required placeholder="e.g. CyberGamer99" class="w-full bg-brand-darkVoid border border-brand-lime/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-lime">
+        </div>
+
+        <div>
+          <label class="block text-gray-400 mb-1">TRANSMISSION EMAIL</label>
+          <input type="email" required placeholder="pilot@matrix.com" class="w-full bg-brand-darkVoid border border-brand-lime/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-lime">
+        </div>
+
+        <div>
+          <label class="block text-gray-400 mb-1">AEROGEL MATRIX SHELL COLOR</label>
+          <select class="w-full bg-brand-darkVoid border border-brand-lime/30 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-lime">
+            <option>Bio-Luminescent Lime Green</option>
+            <option>Cyber Cyan Translucent</option>
+            <option>Deep Space Dark Aerogel</option>
+          </select>
+        </div>
+
+        <button type="submit" class="w-full py-4 mt-4 rounded-xl bg-gradient-to-r from-brand-lime to-brand-cyan text-black font-black text-sm uppercase tracking-widest hover:shadow-[0_0_25px_#C6FF00] transition-all">
+          Confirm Allocation Order
+        </button>
+      </form>
+
+      <!-- Feedback Banner inside Modal -->
+      <div id="modalFeedback" class="hidden mt-4 p-4 rounded-xl bg-brand-lime/20 border border-brand-lime text-brand-lime text-center font-mono text-xs">
+        <i class="fas fa-check-circle text-base mb-1 block"></i>
+        ALLOCATION CONFIRMED! AEROGEL BATCH SECURED.
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- JAVASCRIPT LOGIC & INTERACTION ENGINES -->
+  <script>
+    /* ===================================================
+       1. SYNTHESIZED WEB AUDIO SOUND FX ENGINE
+       =================================================== */
+    let audioEnabled = false;
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function toggleAudio() {
+      initAudio();
+      audioEnabled = !audioEnabled;
+      const soundIcon = document.getElementById('soundIcon');
+      const soundLabel = document.getElementById('soundLabel');
+
+      if (audioEnabled) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        soundIcon.className = 'fas fa-volume-high text-brand-lime text-xl group-hover:scale-110 transition-transform';
+        soundLabel.innerText = 'AUDIO ACTIVE';
+        playSynthSound(880, 'sine', 0.15);
+      } else {
+        soundIcon.className = 'fas fa-volume-xmark text-brand-lime text-xl group-hover:scale-110 transition-transform';
+        soundLabel.innerText = 'AUDIO OFF';
+      }
+    }
+
+    function playSynthSound(freq = 440, type = 'sine', duration = 0.1) {
+      if (!audioEnabled || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
+    }
+
+    /* Click Shockwave Ripple Effect */
+    document.addEventListener('click', (e) => {
+      playSynthSound(300, 'triangle', 0.05);
+
+      const ripple = document.createElement('div');
+      ripple.className = 'ripple';
+      const size = 100;
+      ripple.style.width = ripple.style.height = `${size}px`;
+      ripple.style.left = `${e.clientX - size/2}px`;
+      ripple.style.top = `${e.clientY - size/2}px`;
+
+      document.body.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    });
+
+    /* ===================================================
+       2. CURSOR SPOTLIGHT FOLLOWER
+       =================================================== */
+    const spotlight = document.getElementById('cursor-spotlight');
+    document.addEventListener('mousemove', (e) => {
+      spotlight.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+    });
+
+    /* ===================================================
+       3. 3D CARD TILT ON HOVER ENGINE
+       =================================================== */
+    const tiltCards = document.querySelectorAll('.tilt-card');
+    tiltCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -12;
+        const rotateY = ((x - centerX) / centerX) * 12;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      });
+    });
+
+    /* ===================================================
+       4. BACKGROUND BIOLUMINESCENT PARTICLE CANVAS
+       =================================================== */
+    const pCanvas = document.getElementById('particleCanvas');
+    const pCtx = pCanvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      pCanvas.width = window.innerWidth;
+      pCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * pCanvas.width;
+        this.y = Math.random() * pCanvas.height;
+        this.size = Math.random() * 2.5 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = -Math.random() * 0.6 - 0.2;
+        this.color = Math.random() > 0.5 ? '#C6FF00' : '#00F2FE';
+        this.alpha = Math.random() * 0.6 + 0.2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.y < 0 || this.x < 0 || this.x > pCanvas.width) {
+          this.reset();
+          this.y = pCanvas.height;
+        }
+      }
+      draw() {
+        pCtx.save();
+        pCtx.globalAlpha = this.alpha;
+        pCtx.fillStyle = this.color;
+        pCtx.shadowBlur = 10;
+        pCtx.shadowColor = this.color;
+        pCtx.beginPath();
+        pCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        pCtx.fill();
+        pCtx.restore();
+      }
+    }
+
+    for (let i = 0; i < 50; i++) particles.push(new Particle());
+
+    function animateParticles() {
+      pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    /* ===================================================
+       5. INTERACTIVE 3D AEROGEL MOUSE CANVAS RENDERER
+       =================================================== */
+    const mCanvas = document.getElementById('mouse3DCanvas');
+    const mCtx = mCanvas.getContext('2d');
+    let mouseRotationY = 0;
+    let mouseRotationX = 0.2;
+    let isDraggingMouse = false;
+    let lastMouseX = 0;
+    let mouseThemeColor = '#C6FF00';
+
+    function setMouseTheme(theme) {
+      playSynthSound(650, 'sine', 0.1);
+      mouseThemeColor = theme === 'lime' ? '#C6FF00' : '#00F2FE';
+    }
+
+    function resizeMouseCanvas() {
+      const parent = mCanvas.parentElement;
+      mCanvas.width = parent.clientWidth;
+      mCanvas.height = parent.clientHeight;
+    }
+    window.addEventListener('resize', resizeMouseCanvas);
+    resizeMouseCanvas();
+
+    // Mouse drag interaction for rotating 3D mouse model
+    mCanvas.parentElement.addEventListener('mousedown', (e) => {
+      isDraggingMouse = true;
+      lastMouseX = e.clientX;
+    });
+    window.addEventListener('mouseup', () => isDraggingMouse = false);
+    window.addEventListener('mousemove', (e) => {
+      if (isDraggingMouse) {
+        const deltaX = e.clientX - lastMouseX;
+        mouseRotationY += deltaX * 0.01;
+        lastMouseX = e.clientX;
+      }
+    });
+
+    function draw3DMouseModel() {
+      mCtx.clearRect(0, 0, mCanvas.width, mCanvas.height);
+
+      const cx = mCanvas.width / 2;
+      const cy = mCanvas.height / 2 + 10;
+      const scale = Math.min(cx, cy) * 0.7;
+
+      if (!isDraggingMouse) {
+        mouseRotationY += 0.008; // Idle auto rotate
+      }
+
+      mCtx.save();
+      mCtx.translate(cx, cy);
+
+      // Draw Wireframe Aerogel Exoskeleton Shell
+      const points = [];
+      const numLines = 16;
+      for (let i = 0; i < numLines; i++) {
+        const angle = (i / numLines) * Math.PI * 2 + mouseRotationY;
+        const radX = Math.cos(angle) * scale * 0.45;
+        const radZ = Math.sin(angle) * scale * 0.45;
+        
+        // Perspective projection
+        const projX = radX;
+        const projY = -Math.cos(i * 0.2) * scale * 0.6;
+        points.push({ x: projX, y: projY, z: radZ });
+      }
+
+      // Render glowing cellular lines
+      mCtx.strokeStyle = mouseThemeColor;
+      mCtx.lineWidth = 1.8;
+      mCtx.shadowBlur = 15;
+      mCtx.shadowColor = mouseThemeColor;
+
+      mCtx.beginPath();
+      for (let i = 0; i < points.length; i++) {
+        const p = points[i];
+        const nextP = points[(i + 1) % points.length];
+        mCtx.moveTo(p.x, p.y);
+        mCtx.lineTo(nextP.x, nextP.y);
+
+        // Grid connect to center core
+        mCtx.lineTo(0, 0);
+      }
+      mCtx.stroke();
+
+      // Glowing Inner Bio-Cell Energy Sphere
+      const glowGrad = mCtx.createRadialGradient(0, -10, 5, 0, -10, scale * 0.3);
+      glowGrad.addColorStop(0, '#FFFFFF');
+      glowGrad.addColorStop(0.5, mouseThemeColor);
+      glowGrad.addColorStop(1, 'transparent');
+
+      mCtx.fillStyle = glowGrad;
+      mCtx.beginPath();
+      mCtx.arc(0, -10, scale * 0.35, 0, Math.PI * 2);
+      mCtx.fill();
+
+      mCtx.restore();
+
+      requestAnimationFrame(draw3DMouseModel);
+    }
+    draw3DMouseModel();
+
+    /* ===================================================
+       6. MASS COMPARISON SCALE SLIDER LOGIC
+       =================================================== */
+    function updateMassScale(val) {
+      const beam = document.getElementById('balanceBeam');
+      const valDisplay = document.getElementById('sliderValueDisplay');
+      const massLabel = document.getElementById('standardMassLabel');
+      const fatigueScore = document.getElementById('fatigueScore');
+      const inertiaSaved = document.getElementById('inertiaSaved');
+
+      valDisplay.innerText = `${val}g`;
+      massLabel.innerText = `${val}g`;
+
+      // Calculate tilt angle (-20 deg to +15 deg)
+      const aeroMass = 18;
+      const diff = val - aeroMass;
+      const tilt = Math.min(Math.max((diff / 80) * 18, 0), 22);
+
+      beam.style.transform = `rotate(${-tilt}deg)`;
+
+      // Calculate metrics
+      const fatigue = Math.round((val / 100) * 100);
+      const saved = ((1 - (aeroMass / val)) * 100).toFixed(1);
+
+      fatigueScore.innerText = `${fatigue}%`;
+      inertiaSaved.innerText = `${saved}%`;
+
+      playSynthSound(200 + parseInt(val) * 3, 'sine', 0.02);
+    }
+
+    /* ===================================================
+       7. SCROLL PROGRESS & REVEAL INTERSECTION OBSERVER
+       =================================================== */
+    window.addEventListener('scroll', () => {
+      // Scroll Progress Bar Width
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('scrollProgress').style.width = `${scrolled}%`;
+
+      // Header Glassmorphism morph on scroll
+      const header = document.getElementById('mainHeader');
+      if (winScroll > 50) {
+        header.classList.add('shadow-[0_10px_30px_rgba(0,0,0,0.8)]', 'border-brand-lime/30');
+      } else {
+        header.classList.remove('shadow-[0_10px_30px_rgba(0,0,0,0.8)]', 'border-brand-lime/30');
+      }
+    });
+
+    // Intersection Observer for scroll animated reveals
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ===================================================
+       8. PRE-ORDER MODAL ENGINE
+       =================================================== */
+    function openOrderModal(title = 'AERO-BIO 0G Flagship', price = '$189') {
+      playSynthSound(700, 'sine', 0.15);
+      document.getElementById('modalProductTitle').innerText = title;
+      document.getElementById('modalProductPrice').innerText = `${price} USD`;
+
+      const modal = document.getElementById('orderModal');
+      const modalContent = document.getElementById('modalContent');
+
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modalContent.classList.remove('scale-95');
+      modalContent.classList.add('scale-100');
+    }
+
+    function closeOrderModal() {
+      playSynthSound(400, 'sine', 0.1);
+      const modal = document.getElementById('orderModal');
+      const modalContent = document.getElementById('modalContent');
+
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      modalContent.classList.remove('scale-100');
+      modalContent.classList.add('scale-95');
+
+      setTimeout(() => {
+        document.getElementById('modalFeedback').classList.add('hidden');
+      }, 300);
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      playSynthSound(900, 'sine', 0.25);
+      const feedback = document.getElementById('modalFeedback');
+      feedback.classList.remove('hidden');
+
+      setTimeout(() => {
+        closeOrderModal();
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
